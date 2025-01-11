@@ -28,18 +28,20 @@ describe.only('断言常用场景', () => {
         cy.contains('[data-testid="hello-text"]', /Hello/)
     })
     it("判断是否显示", () => {
-        // retry until the element with
-        // data-testid "form-submit" is visible
+
+        // 提交按钮是否显示
         cy.get('[data-testid="form-submit"]').should('be.visible')
-        // retry until the list item with
-        // text "write tests" is visible
+
+        // li 元素是否显示
         cy.contains('[data-testid="todo"] li', '我是需要匹配的li文本').should('be.visible')
 
-        // // retry until SOME elements are visible
+        // li 元素是否显示
         cy.get('li').should('be.visible')
-        // // retry until EVERY element is invisible
+
+        // li 元素是隐藏
         cy.get('li.hidden').should('not.be.visible')
     })
+
     it("判断是否在加载中", () => {
         // 一般情况下，我们是判断它是为not.exist ,不存在的，如果一直在加载可能就是后端没返数据，就一直显示加载中
         // 即为cy.get('[data-testid="loading"]').should('not.exist')
@@ -50,6 +52,8 @@ describe.only('断言常用场景', () => {
     it("判断单选框是否选中", () => {
         cy.get(':radio').should('be.not.checked')
     })
+
+    // 下面的还没写完
     // it("判断是否有对应的css,是否选中", () => {
     //     // retry until this input does not have class disabled
     //     // cy.get('[data-testid="completed"]').should(
