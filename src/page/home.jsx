@@ -49,14 +49,19 @@ const Home = memo(() => {
             <Divider />
             <div>
                 <p
-                    data-testid="completed"
+                    data-testid="decorationId"
                     style={{
-                        textDecoration: "line-through",
+                        textDecoration: "line-through solid rgb(0, 0, 0)",
                     }}
-                    className='p-text-decoration'
                 >
-                    我是一个有下划线的文本呀
+                    我是一个有删除线的文本呀
                 </p>
+            </div>
+            <Divider />
+            <div>
+                <Button data-testid="example-input" disabled={true}>
+                    我是一个需要测试的button
+                </Button>
             </div>
         </div>
     )

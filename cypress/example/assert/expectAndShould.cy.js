@@ -30,7 +30,6 @@ describe.only('学习expect和should断言', () => {
         // 先判断类型，在判断包含的值
         expect([1, 2, 3]).to.be.an('array').that.includes(2);// an 判断是一个数组，在又包含我们的2
     })
-
     it("equal 断言", () => {
         // 判断两值是否等于
         // 1.常用写法
@@ -63,8 +62,8 @@ describe.only('学习expect和should断言', () => {
     })
     it("empty断言", () => {
         // 1、空的，严格不等于，常用于断言字符串，数组，对象。
-        expect([]).to.be.empty;//数组是个为空
-        expect('').to.be.empty;//字符串为空
+        expect([]).to.be.empty;// 数组是个为空
+        expect('').to.be.empty;// 字符串为空
         expect({}).to.be.empty;// 空对象
 
         // 2、因为根据目标类型执行不同的操作，所以在使用之前检查目标的类型很重要
@@ -74,7 +73,6 @@ describe.only('学习expect和should断言', () => {
         expect([1, 2, 3], errorMessage).to.be.empty;// 数组不为空所以报错啦
 
     })
-
     it("within", () => {
 
         // 断言目标是一个大于或等于给定数字或日期的数字或日期start，以及小于或等于给定数字或日期的数字或日期finish
@@ -97,33 +95,31 @@ describe.only('学习expect和should断言', () => {
     })
     it("throw", () => {
         // 当没有提供参数时，调用目标函数并断言引发错误。.throw
-        // 调用该函数就会报错，我们预判了概错误，所以会正常执行
+        // 调用该函数就会报错，我们预判该错误，所以会正常执行
         var badFn = function () { throw new TypeError('Illegal salmon!'); };
         expect(badFn()).to.throw();
     })
     it(".members", () => {
         // 断言目标数组具有与给定数组相同的成员 
-        expect([1, 2, 3]).to.have.members([2, 1, 3]);// 成员相同
-        expect([1, 2, 2]).to.have.members([2, 1, 2]);
+        expect([1, 2, 3]).to.have.members([2, 1, 3]);// 成员相同 1,2,3
+        expect([1, 2, 2]).to.have.members([2, 1, 2]);// 成员相同 1,2
 
         // 默认情况下，顺序无关紧要。在链中添加得更早，以要求成员以相同的顺序出现。
         expect([1, 2, 3]).to.have.ordered.members([1, 2, 3]);
-        expect([1, 2, 3]).to.have.members([2, 1, 3])
-            .but.not.ordered.members([2, 1, 3]);
+        expect([1, 2, 3]).to.have.members([2, 1, 3]).but.not.ordered.members([2, 1, 3]);
 
         // 默认情况下，两个数组的大小必须相同。在链中添加较早的元素以要求目标成员是预期成员的超集。
         // 注意一哈， 添加时子集中的重复项将被忽略。
-        expect([1, 2, 3]).to.include.members([1, 2]);
+        expect([1, 2, 3]).to.include.members([1, 2]);// 
         expect([1, 2, 3]).to.not.have.members([1, 2]);
 
         // 期待我们的成员有1,2,3，虽然2重复了3次，但是它仍然被包含在预期成员中。
         expect([1, 2, 3]).to.include.members([1, 2, 2, 2]);
 
-        expect([1, 2]).to.have.members([1, 2, 3], errorMessage);
+        expect([1, 2]).to.have.members([1, 2, 3], errorMessage);// 多了个3，所以报错啦
         expect([1, 2], errorMessage).to.have.members([1, 2, 3]);
 
     })
-
     it(".any 断言", () => {
         // 使链要求目标至少有一个给定的键
         expect({ a: 1, b: 2 }).to.have.any.keys('b');// 对象中至少有一个属性b
@@ -140,14 +136,11 @@ describe.only('学习expect和should断言', () => {
         expect(true).to.be.true; // 就是相等，不用解释
         expect(true).to.be.ok; // OK 以为 true，不推荐写法
     })
-    
     it(".match", () => {
         // 断言目标与给定的正则表达式匹配
         expect('foobar').to.match(/^foo/);
-
     })
-
-    it("lengthOf", () => {
+    it.only("lengthOf", () => {
 
         // 断言目标的长度
         expect([1, 2, 3]).to.have.lengthOf(3); //3 个值等于3
@@ -169,6 +162,19 @@ describe.only('学习expect和should断言', () => {
         expect([1, 2, 3]).to.have.lengthOf(2, errorMessage);
         expect([1, 2, 3], errorMessage).to.have.lengthOf(2);
     })
+    it(".an", () => {
+        // an的别名是a ，两个可以互换的使用。
+
+        // 1.断言目标的类型
+        expect('foo').to.be.a('string');
+        expect({ a: 1 }).to.be.an('object');
+        expect(null).to.be.a('null');
+        expect(undefined).to.be.an('undefined');
+        expect(new Error).to.be.an('error');
+
+        // 2. 也可以用作语言链来提高断言的可读性。
+        expect({ b: 2 }).to.have.a.property('b');
+    })
 
     // 后面的好像不常用唉
     it(".oneOf", () => {
@@ -177,59 +183,30 @@ describe.only('学习expect和should断言', () => {
     it(".by", () => {
 
     })
-    it(".an", () => {
-    })
     it("property", () => {
-
     })
     it(".string", () => {
         // 断言目标字符串包含给定的子字符串str。
         expect('foobar').to.have.string('bar');
-
     })
 
     it(".fail", () => {
-
     })
-    // it(".deep 断言", () => {
-
-    //     // 深度相等，可以理解为数组对象的长度是相等的，但是两个对象并不想当，
-    //     // 因为对象是复杂的数据结构， 在内存中会创建会创建不同的栈。
-    //     // Target object deeply (but not strictly) equals `{a: 1}`
-    //     expect({ a: 1 }).to.deep.equal({ a: 1 });
-    //     expect({ a: 1 }).to.not.equal({ a: 1 });
-
-    //     // Target array deeply (but not strictly) includes `{a: 1}`
-    //     expect([{ a: 1 }]).to.deep.include({ a: 1 });
-    //     expect([{ a: 1 }]).to.not.include({ a: 1 });
-
-    //     // Target object deeply (but not strictly) includes `x: {a: 1}`
-    //     expect({ x: { a: 1 } }).to.deep.include({ x: { a: 1 } });
-    //     expect({ x: { a: 1 } }).to.not.include({ x: { a: 1 } });
-
-    //     // Target array deeply (but not strictly) has member `{a: 1}`
-    //     expect([{ a: 1 }]).to.have.deep.members([{ a: 1 }]);
-    //     expect([{ a: 1 }]).to.not.have.members([{ a: 1 }]);
-
-    //     // Target set deeply (but not strictly) has key `{a: 1}`
-    //     expect(new Set([{ a: 1 }])).to.have.deep.keys([{ a: 1 }]);
-    //     expect(new Set([{ a: 1 }])).to.not.have.keys([{ a: 1 }]);
-
-    //     // Target object deeply (but not strictly) has property `x: {a: 1}`
-    //     expect({ x: { a: 1 } }).to.have.deep.property('x', { a: 1 });
-    //     expect({ x: { a: 1 } }).to.not.have.property('x', { a: 1 });
-
-    // })
+    it(".deep 断言", () => {
+        // 深度相等，可以理解为数组对象的长度是相等的，但是两个对象并不想当，
+        // 因为对象是复杂的数据结构， 在内存中会创建会创建不同的栈。
+        // Target object deeply (but not strictly) equals `{a: 1}`
+        expect({ a: 1 }).to.deep.equal({ a: 1 });
+        expect({ a: 1 }).to.not.equal({ a: 1 });
+    })
     it("true断言", () => {
     })
     it("false断言", () => {
     })
 
     it("above", () => {
-
     })
 
     it(".least", () => {
-
     })
 })

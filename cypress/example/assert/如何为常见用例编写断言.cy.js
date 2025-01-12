@@ -8,11 +8,9 @@ describe.only('断言常用场景', () => {
     it("判断列表长度值是否为4", () => {
         cy.get('li').should('have.length', 4)
     })
-
     it("判断form表单input的class并没有disabled名", () => {
         cy.get('form').find('input').should('not.have.class', 'disabled')
     })
-
     it("获取文本框的value", () => {
         cy.wait(2000)
         // 输入框的值为cxw
@@ -52,32 +50,32 @@ describe.only('断言常用场景', () => {
     it("判断单选框是否选中", () => {
         cy.get(':radio').should('be.not.checked')
     })
+    it("判断是否有对应的css 属性", () => {
+        // 判断这个元素的css属性是否为line-through solid rgb(0, 0, 0)
+        // 注意，这里使用的.CSS 选择器是 chai-jquery的语法，需要下载对应库
+        cy.get('[data-testid="decorationId"]').should(
+            'have.css',
+            'text-decoration',
+            'line-through solid rgb(0, 0, 0)'
+        )
+        // 这个元素没有disPlay:none
+        cy.get('[data-testid="decorationId"]').should('not.have.css', 'display', 'none')
+    })
 
+    it("禁止选中", () => {
+        // 先获取该元素，检测该元素是否处于禁用状态，如果处于禁用状态，则执行后面的代码
+        // .invoke('prop', 'disabled', false) 的作用是将选中的元素的 disabled 属性设置为 false，
+        // 即取消该元素的禁用状态，使其变为可交互状态即将disabled=true 改为disabled = false
+        cy.get('[data-testid="example-input"]')
+            .should('be.disabled')
+            .invoke('prop', 'disabled', false)
+
+        cy.get('[data-testid="example-input"]')
+            // 判断该元素是否处于启用状态，他的disabled 属性为false
+            .should('be.enabled')
+            .and('not.be.disabled')
+    })
     // 下面的还没写完
-    // it("判断是否有对应的css,是否选中", () => {
-    //     // retry until this input does not have class disabled
-    //     // cy.get('[data-testid="completed"]').should(
-    //     //     'have.css',
-    //     //     'text-decoration',
-    //     //     'line-through'
-    //     // )
-
-    //     // retry while accordion css has the
-    //     // "display: none" property
-    //     cy.get('[data-testid="accordion"]').should('not.have.css', 'display', 'none')
-    // })
-    // it("禁止选中", () => {
-    //     cy.get('[data-testid="example-input"]')
-    //         .should('be.disabled')
-    //         // let's enable this element from the test
-    //         .invoke('prop', 'disabled', false)
-
-    //     cy.get('[data-testid="example-input"]')
-    //         // we can use "enabled" assertion
-    //         .should('be.enabled')
-    //         // or negate the "disabled" assertion
-    //         .and('not.be.disabled')
-    // })
     // it("肯定断言", () => {
     //     cy.get('[data-testid="todo-item"]')
     //         .should('have.length', 2)
