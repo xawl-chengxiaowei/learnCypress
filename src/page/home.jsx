@@ -62,6 +62,17 @@ const Home = memo(() => {
                 <Button data-testid="example-input" disabled={true}>
                     我是一个需要测试的button
                 </Button>
+                <span data-testid="todo-item" className='completed'> 我是没啥存在感的路人甲文本</span>
+                <span data-testid="todo-item" className='completed'> 我是没啥存在感的路人乙文本</span>
+                <span> 我是没啥存在感的路人丙文本</span>
+            </div>
+            <Divider />
+            <div>
+                <span
+                    className='testAttr'
+                    bar="bar"
+                    id='testAttr'
+                >我是chai-jquery的测试文本</span>
             </div>
         </div>
     )

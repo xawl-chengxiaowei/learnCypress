@@ -62,7 +62,7 @@ describe.only('断言常用场景', () => {
         cy.get('[data-testid="decorationId"]').should('not.have.css', 'display', 'none')
     })
 
-    it("禁止选中", () => {
+    it("判断是否是禁止按钮。然后将其改为可点击", () => {
         // 先获取该元素，检测该元素是否处于禁用状态，如果处于禁用状态，则执行后面的代码
         // .invoke('prop', 'disabled', false) 的作用是将选中的元素的 disabled 属性设置为 false，
         // 即取消该元素的禁用状态，使其变为可交互状态即将disabled=true 改为disabled = false
@@ -70,23 +70,26 @@ describe.only('断言常用场景', () => {
             .should('be.disabled')
             .invoke('prop', 'disabled', false)
 
+        // 判断该元素是否处于启用状态，他的disabled 属性为false
         cy.get('[data-testid="example-input"]')
-            // 判断该元素是否处于启用状态，他的disabled 属性为false
             .should('be.enabled')
             .and('not.be.disabled')
     })
-    // 下面的还没写完
-    // it("肯定断言", () => {
-    //     cy.get('[data-testid="todo-item"]')
-    //         .should('have.length', 2)
-    //         .and('have.class', 'completed')
 
-    //     cy.contains('first todo').should('not.have.class', 'completed')
-    //     cy.get('[data-testid="loading"]').should('not.be.visible')
-    // })
-    // it.only("否定断言-错误通过", () => {
-    //     // retry until this input does not have class disabled
-    //     cy.get('form').find('input').should('not.have.class', 'disabled')
-    // })
+    it("肯定断言", () => {
+        // 这个元素的数量为2，并且有completed 这个class
+        cy.get('[data-testid="todo-item"]')
+            .should('have.length', 2)
+            .and('have.class', 'completed')
 
+        // contains 命令是查找包含的文本断言 。 在该句中是查找包含文本 '我是没啥存在感的路人丙文本' 的 DOM 元素。
+        // 后面是查找不包含类 completed 的 DOM 元素。
+        // 所以这句话的意思是 查找包含文本 '我是没啥存在感的路人丙文本' 的但是不包含类 completed 的 DOM 元素。
+        cy.contains('我是没啥存在感的路人丙文本').should('not.have.class', 'completed')
+    })
+
+    it("否定断言-错误通过", () => {
+        // 断言 form 表单下的input 没有disabled这个class类
+        cy.get('form').find('input').should('not.have.class', 'disabled')
+    })
 })
