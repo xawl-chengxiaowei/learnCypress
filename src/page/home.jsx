@@ -71,6 +71,7 @@ const Home = memo(() => {
                 <span
                     className='testAttr'
                     bar="bar"
+                    foo="123"
                     id='testAttr'
                 >我是chai-jquery的测试文本</span>
             </div>
